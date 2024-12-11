@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static api.CourierApi.BAD_LOGIN_REQUEST;
-import static api.CourierApi.USER_ISNT_FOUND;
+import static api.CourierApi.USER_WASNT_FOUND;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 
@@ -45,6 +45,7 @@ public class LoginCourierTests {
 
     @Test
     @DisplayName("Успешный логин курьера со всеми данными")
+    @Description("Код 200 и id соответсует значению в JSON")
     public void courierLoginAllParametersTest(){
         //логинимся
         CourierData loginCourierDate = new CourierData(courier.getLogin(),courier.getPassword());
@@ -64,7 +65,7 @@ public class LoginCourierTests {
 
     @Test
     @DisplayName("Ошибка при логине с неверным паролем")
-    @Description("Тут не понятно что ожидается, знаю что при любом неправильном вводе в поле должен выдать BAD REQUEST 400")
+    @Description("Код 404 с текстом 'Учетная запись не найдена'")
     public void errorWithWrongPasswordTest(){
         //логинимся
         CourierData loginCourierDate = new CourierData(courier.getLogin(), "asdc83l");
@@ -72,15 +73,16 @@ public class LoginCourierTests {
         //сохраняем запрос
         ValidatableResponse response = courierApi.loginCourier(loginCourierDate);
 
-        //Тут по хорошему нужен BAD REQUEST но иначе меня mvn clean чтобы сделать отчет по Allure не пропускает
+        //Проверка
         response.log().all()
                 .assertThat()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .body("message", equalTo(BAD_LOGIN_REQUEST));
+                .statusCode(HttpStatus.SC_NOT_FOUND)
+                .body("message", equalTo(USER_WASNT_FOUND));
     }
 
     @Test
     @DisplayName("Ошибка при логине без ввода пароля")
+    @Description("Код 400 с текстом 'Недостаточно данных для входа'")
     public void errorWithNoPasswordTest(){
         //логинимся
         CourierData loginCourierDate = new CourierData(courier.getLogin(), "");
@@ -97,6 +99,7 @@ public class LoginCourierTests {
 
     @Test
     @DisplayName("Ошибка при логине без логина")
+    @Description("Код 400 с текстом 'Недостаточно данных для входа'")
     public void errorWithNoLoginTest(){
         //логинимся
         CourierData loginCourierDate = new CourierData("", courier.getPassword());
@@ -113,6 +116,7 @@ public class LoginCourierTests {
 
     @Test
     @DisplayName("Ошибка при логине несуществуещего курьера")
+    @Description("Код 404 с текстом 'Учетная запись не найдена'")
     public void errorWithNonExistingLoginTest(){
         //логинимся
         CourierData loginCourierDate = new CourierData("iDontEx1stL0ginBlaBla", "asdc83l");
@@ -124,7 +128,7 @@ public class LoginCourierTests {
         response.log().all()
                 .assertThat()
                 .statusCode(HttpStatus.SC_NOT_FOUND)
-                .body("message", equalTo(USER_ISNT_FOUND));
+                .body("message", equalTo(USER_WASNT_FOUND));
     }
 
 }

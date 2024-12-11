@@ -1,5 +1,6 @@
 package api;
 
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import model.CourierData;
 import static io.restassured.RestAssured.given;
@@ -12,9 +13,9 @@ public class CourierApi extends RestApi {
     public static final String ERROR_COURIER_CONFLICT = "Этот логин уже используется. Попробуйте другой.";
     public static final String BAD_COURIER_REQUEST = "Недостаточно данных для создания учетной записи";
     public static final String BAD_LOGIN_REQUEST = "Недостаточно данных для входа";
-    public static final String USER_ISNT_FOUND = "Учетная запись не найдена";
+    public static final String USER_WASNT_FOUND = "Учетная запись не найдена";
 
-
+    @Step("Создаем курьера")
     public ValidatableResponse createCourier(CourierData courier){
         return given()
                 .spec(requestSpecification())
@@ -25,6 +26,7 @@ public class CourierApi extends RestApi {
                 .then();
     }
 
+    @Step("Логинимся курьером")
     public ValidatableResponse loginCourier(CourierData courier){
         return given()
                 .spec(requestSpecification())
@@ -34,6 +36,8 @@ public class CourierApi extends RestApi {
                 .post(LOGIN_COURIER_URI)
                 .then();
     }
+
+    @Step("Удаляем курьера")
     public ValidatableResponse deleteCourier(Integer courierId){
         return given()
                 .spec(requestSpecification())

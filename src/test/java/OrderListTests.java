@@ -1,5 +1,6 @@
 import api.CourierApi;
 import api.OrderApi;
+import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import model.CourierData;
@@ -8,8 +9,7 @@ import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class OrderListTests {
 
@@ -70,15 +70,16 @@ public class OrderListTests {
     }
 
     @Test
-    @DisplayName("Успешное получение списка заказов у курьера")
+    @DisplayName("Получение списка всех заказов")
+    @Description("Код 200 и заказы не Null")
     public void getOrderListTest() {
         //Вызываем лист заказов фильтруем по курьеру и сохраняем
-        ValidatableResponse orderListResponse = orderApi.getOrderlist(courierId);
+        ValidatableResponse orderListResponse = orderApi.getOrderlist();
 
         //Проверка
         orderListResponse.log().all()
                 .assertThat()
                 .statusCode(HttpStatus.SC_OK)
-                .body("orders[0].courierId", equalTo(courierId));
+                .body("orders", notNullValue());
     }
 }

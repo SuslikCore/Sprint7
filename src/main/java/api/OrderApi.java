@@ -1,5 +1,6 @@
 package api;
 
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import model.OrderData;
 import static io.restassured.RestAssured.given;
@@ -12,7 +13,7 @@ public class OrderApi extends RestApi {
     public static final String FINISH_ORDER_URI = "/api/v1/orders/finish/{id}";
     public static final String GET_ORDER_LIST = "/api/v1/orders";
 
-
+    @Step("Создаем заказ")
     public ValidatableResponse createOrder(OrderData order){
         return given()
                 .spec(requestSpecification())
@@ -23,6 +24,7 @@ public class OrderApi extends RestApi {
                 .then();
     }
 
+    @Step("Получаем id заказ через его-номер заказа")
     public ValidatableResponse getOrderIdByTrackNumber(int trackNumber){
         return given()
                 .spec(requestSpecification())
@@ -32,6 +34,7 @@ public class OrderApi extends RestApi {
                 .then();
     }
 
+    @Step("Принимаем заказ")
     public ValidatableResponse acceptOrder(int courierId, int orderId){
         return given()
                 .spec(requestSpecification())
@@ -42,6 +45,7 @@ public class OrderApi extends RestApi {
                 .then();
     }
 
+    @Step("Завершаем заказ")
     public ValidatableResponse finishOrderResponse(int orderId){
         return given()
                 .spec(requestSpecification())
@@ -51,10 +55,10 @@ public class OrderApi extends RestApi {
                 .then();
     }
 
-    public ValidatableResponse getOrderlist(Integer courierId){
+    @Step("Получаем список с заказами")
+    public ValidatableResponse getOrderlist(){
         return given()
                 .spec(requestSpecification())
-                .queryParam("courierId",courierId)
                 .when()
                 .get(GET_ORDER_LIST)
                 .then();

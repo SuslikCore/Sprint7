@@ -1,5 +1,6 @@
 import api.CourierApi;
 import api.OrderApi;
+import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import model.CourierData;
@@ -91,7 +92,7 @@ public class CreateOrderTests {
         }
     }
 
-    @Parameterized.Parameters()
+    @Parameterized.Parameters(name = "Тестовые данные: firstName = {0}, lastName = {1}, address = {2}, metroStation = {3}, phone = {4}, rentTime = {5}, deliveryDate = {6}, comment = {7}, color = {8}")
     public static Object[][] getDate(){
         return new Object[][]{
                 {"Вася", "Васькин", "Москва", 3, "+7 800 355 35 35", 5, "2024-06-06", "БУ, Испугался", new String[]{"BLACK"}},
@@ -102,6 +103,7 @@ public class CreateOrderTests {
 
     @Test
     @DisplayName("Успешное создание заказа с цветом, с двумя и без цвета")
+    @Description("Код 201 и трек номер соответсует в json")
     public void orderCanBeCreatedAllParametersTest() {
 
         //Данные заказа
