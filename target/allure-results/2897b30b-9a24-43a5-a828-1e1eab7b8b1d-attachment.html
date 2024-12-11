@@ -1,0 +1,45 @@
+<div>POST to http://qa-scooter.praktikum-services.ru/api/v1/orders</div>
+
+    <h4>Body</h4>
+    <div>
+    <pre class="preformated-text">
+{
+    &quot;firstName&quot;: &quot;Куку&quot;,
+    &quot;lastName&quot;: &quot;Мяфкина&quot;,
+    &quot;address&quot;: &quot;Курятник&quot;,
+    &quot;metroStation&quot;: 2,
+    &quot;phone&quot;: &quot;+7 800 355 35 35&quot;,
+    &quot;rentTime&quot;: 3,
+    &quot;deliveryDate&quot;: &quot;2024-06-06&quot;,
+    &quot;comment&quot;: &quot;Подойди сюда&quot;,
+    &quot;color&quot;: [
+        
+    ]
+}    </pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>Accept: */*</div>
+            <div>Content-Type: application/json</div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        curl -v -X POST &#39;http://qa-scooter.praktikum-services.ru/api/v1/orders&#39; -H &#39;Accept: */*&#39; -H &#39;Content-Type: application/json&#39; -d &#39;{
+    &quot;firstName&quot;: &quot;Куку&quot;,
+    &quot;lastName&quot;: &quot;Мяфкина&quot;,
+    &quot;address&quot;: &quot;Курятник&quot;,
+    &quot;metroStation&quot;: 2,
+    &quot;phone&quot;: &quot;+7 800 355 35 35&quot;,
+    &quot;rentTime&quot;: 3,
+    &quot;deliveryDate&quot;: &quot;2024-06-06&quot;,
+    &quot;comment&quot;: &quot;Подойди сюда&quot;,
+    &quot;color&quot;: [
+        
+    ]
+}&#39;
+    </div>
+
